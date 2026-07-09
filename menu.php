@@ -129,7 +129,7 @@
     <h1>ระบบจัดการรายการอาหาร</h1>
     <p>รวมเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
     
-    <a href="menu.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+    <a href="index.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
         ดูหน้าเมนูหลัก
     </a>
 </div>
@@ -155,7 +155,7 @@ ini_set('display_startup_errors', 1);
 include "action/connect.php";
 
 // ดึง ทัั้งหมด จาก ตาราง menus
-$sql = "SELECT * FROM menus";
+$sql = "SELECT * FROM menu_types";
 // ที่อยู่ฐาน , คิวรี่
 $result = mysqli_query($con , $sql);
 // ทดสอบ
@@ -167,27 +167,16 @@ $result = mysqli_query($con , $sql);
     <thead>
     <th>รหัสเมนู</th>
     <th>ชื่อเมนู</th>
-    <th>ราคา</th>
-    <th>ภาพ</th>
-    <th>ประเภท</th>
     </thead>
 
     <?php
-    foreach($result as $menu){
+    foreach($result as $menu_types){
     ?>
 
     <tr>
-    <td><span class="badge-id"><?= $menu["menu_id"] ?></span></td>
-    <td style="font-weight: 600;"><?= $menu["menu_name"] ?></td>
-    <td><span class="price-tag">฿<?= number_format((float)$menu["menu_price"], 2) ?></span></td>
-    <td>
-    <img
-    src="<?= $menu["menu_image"] ?>"
-    alt=""
-    class="menu-img"
-    >
-    </td>
-    <td><?= $menu["menu_id"] ?></td>
+    <td><span class="badge-id"><?= $menu_types["type_id"] ?></span></td>
+    <td style="font-weight: 600;"><?= $menu_types["type_name"] ?></td>
+
     </tr>
 
     <?php
