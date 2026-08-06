@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>จัดการประเภทเมนูอาหาร</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,21 +14,67 @@
         --primary-color: #ff4757; /* สีแดงสดใสแนวร้านอาหาร */
         --secondary-color: #2f3542; /* สีกรมท่าเข้มเพิ่มความหรูหรา */
         --bg-color: #f1f2f6;
-        --card-bg: #ffffff;
+        --card-bg: rgba(255, 255, 255, 0.95); /* ปรับความโปร่งแสงรองรับ Glassmorphism */
     }
 
     body {
         font-family: 'Sarabun', sans-serif;
-        background-color: var(--bg-color);
         color: var(--secondary-color);
         padding: 40px 20px;
         margin: 0;
+        min-height: 100vh;
+        position: relative;
     }
 
-    /* ส่วนหัวข้อตกแต่งเพิ่มความแกรนด์ */
+    /* --- สไตล์สำหรับ Video Background --- */
+    .video-bg-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .video-bg-container iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 56.25vw; /* อัตราส่วน 16:9 */
+        min-height: 100vh;
+        min-width: 177.77vh;
+        transform: translate(-50%, -50%) scale(1.2);
+        pointer-events: none;
+    }
+
+    /* แผ่นฟิล์มมืดกรองแสงเพื่อให้ตารางและข้อความอ่านง่ายขึ้น */
+    .video-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(4px);
+        z-index: -1;
+    }
+
+    /* ส่วนหัวข้อตกแต่ง */
     .header-title {
         text-align: center;
         margin-bottom: 30px;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(8px);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
     .header-title h1 {
         font-size: 28px;
@@ -44,13 +90,14 @@
     
     /* กล่องครอบตาราง */
     .table-container {
-        max-width: 1100px;
+        max-width: 800px;
         margin: 0 auto;
         background-color: var(--card-bg);
+        backdrop-filter: blur(8px);
         border-radius: 16px; /* ขอบมนสวยๆ */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* เงานุ่มนวล */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* เงานุ่มนวล */
         overflow: hidden;
-        border: 1px solid rgba(0,0,0,0.03);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     table {
@@ -83,7 +130,7 @@
 
     /* สลับสีแถวให้ดูง่ายขึ้น (Zebra Striping) */
     tr:nth-child(even) {
-        background-color: #fdfdfd;
+        background-color: rgba(250, 250, 250, 0.5);
     }
 
     /* เอฟเฟกต์ชี้แล้วเรืองแสง */
@@ -101,45 +148,28 @@
         font-size: 12px;
         font-weight: bold;
     }
-
-    /* ตกแต่งราคาให้เด่นชัด */
-    .price-tag {
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 16px;
-    }
-
-    /* ตกแต่งรูปภาพเมนูให้เหมือนแอปสั่งอาหาร */
-    .menu-img {
-        width: 140px;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        transition: transform 0.3s ease;
-    }
-
-    /* เวลาเอาเมาส์ชี้ที่รูปภาพ ภาพจะขยายใหญ่ขึ้นนิดนึง */
-    .menu-img:hover {
-        transform: scale(1.08);
-    }
 </style>
-
-<div class="header-title">
-    <h1>ระบบจัดการรายการอาหาร</h1>
-    <p>รวมเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
-    
-    <a href="index.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
-        ดูหน้าเมนูหลัก
-    </a>
-</div>
-
 </head>
 <body>
 
+<!-- ================= วิดีโอพื้นหลัง YouTube (คลิปใหม่) ================= -->
+<div class="video-bg-container">
+    <iframe 
+        src="https://www.youtube.com/embed/fq2WzkeYdLc?autoplay=1&mute=1&loop=1&playlist=fq2WzkeYdLc&controls=0&showinfo=0&modestbranding=1" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+    </iframe>
+</div>
+<div class="video-overlay"></div>
+<!-- ====================================================================== -->
+
 <div class="header-title">
-    <h1>ระบบจัดการรายการอาหาร</h1>
-    <p>รวมเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
+    <h1>ระบบจัดการประเภทเมนูอาหาร</h1>
+    <p>รวมประเภทเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
+    
+    <a href="index.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: opacity 0.2s;">
+        ดูหน้าเมนูหลัก
+    </a>
 </div>
 
 <?php
@@ -158,30 +188,31 @@ include "action/connect.php";
 $sql = "SELECT * FROM menu_types";
 // ที่อยู่ฐาน , คิวรี่
 $result = mysqli_query($con , $sql);
-// ทดสอบ
-// var_dump($result);
 ?>
 
 <div class="table-container">
     <table>
     <thead>
-    <th>รหัสเมนู</th>
-    <th>ชื่อเมนู</th>
+        <tr>
+            <th style="width: 30%;">รหัสประเภท</th>
+            <th>ชื่อประเภทเมนู</th>
+        </tr>
     </thead>
 
+    <tbody>
     <?php
     foreach($result as $menu_types){
     ?>
 
     <tr>
-    <td><span class="badge-id"><?= $menu_types["type_id"] ?></span></td>
-    <td style="font-weight: 600;"><?= $menu_types["type_name"] ?></td>
-
+        <td><span class="badge-id"><?= htmlspecialchars($menu_types["type_id"]) ?></span></td>
+        <td style="font-weight: 600;"><?= htmlspecialchars($menu_types["type_name"]) ?></td>
     </tr>
 
     <?php
     }
     ?>
+    </tbody>
 
     </table>
 </div>
