@@ -11,10 +11,10 @@
 
 <style>
     :root {
-        --primary-color: #ff4757; /* สีแดงสดใสแนวร้านอาหาร */
-        --secondary-color: #2f3542; /* สีกรมท่าเข้มเพิ่มความหรูหรา */
+        --primary-color: #ff4757; 
+        --secondary-color: #2f3542; 
         --bg-color: #f1f2f6;
-        --card-bg: rgba(255, 255, 255, 0.95); /* ปรับความโปร่งแสงรองรับ Glassmorphism */
+        --card-bg: rgba(255, 255, 255, 0.95); 
     }
 
     body {
@@ -24,6 +24,11 @@
         margin: 0;
         min-height: 100vh;
         position: relative;
+        /* ใช้ Flexbox เพื่อดัน Footer ไปล่างสุด */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
     }
 
     /* --- สไตล์สำหรับ Video Background --- */
@@ -43,14 +48,13 @@
         top: 50%;
         left: 50%;
         width: 100vw;
-        height: 56.25vw; /* อัตราส่วน 16:9 */
+        height: 56.25vw; 
         min-height: 100vh;
         min-width: 177.77vh;
         transform: translate(-50%, -50%) scale(1.2);
         pointer-events: none;
     }
 
-    /* แผ่นฟิล์มมืดกรองแสงเพื่อให้ตารางและข้อความอ่านง่ายขึ้น */
     .video-overlay {
         position: fixed;
         top: 0;
@@ -62,7 +66,6 @@
         z-index: -1;
     }
 
-    /* ส่วนหัวข้อตกแต่ง */
     .header-title {
         text-align: center;
         margin-bottom: 30px;
@@ -88,14 +91,14 @@
         font-size: 14px;
     }
     
-    /* กล่องครอบตาราง */
     .table-container {
+        width: 100%;
         max-width: 800px;
         margin: 0 auto;
         background-color: var(--card-bg);
         backdrop-filter: blur(8px);
-        border-radius: 16px; /* ขอบมนสวยๆ */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* เงานุ่มนวล */
+        border-radius: 16px; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.3);
     }
@@ -106,7 +109,6 @@
         text-align: left;
     }
 
-    /* หัวตารางไล่เฉดสี */
     thead {
         background: linear-gradient(135deg, var(--secondary-color), #4b5261);
         color: white;
@@ -120,26 +122,22 @@
         text-transform: uppercase;
     }
 
-    /* แถวตาราง */
     td {
         padding: 16px 24px;
         border-bottom: 1px solid #f1f2f6;
         font-size: 15px;
-        vertical-align: middle; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+        vertical-align: middle; 
     }
 
-    /* สลับสีแถวให้ดูง่ายขึ้น (Zebra Striping) */
     tr:nth-child(even) {
         background-color: rgba(250, 250, 250, 0.5);
     }
 
-    /* เอฟเฟกต์ชี้แล้วเรืองแสง */
     tr:hover {
         background-color: #fffaf0; 
         transition: background-color 0.2s ease;
     }
 
-    /* ตกแต่งรหัสเมนูให้เหมือน Badge */
     .badge-id {
         background-color: #eccc68;
         color: #333;
@@ -148,11 +146,27 @@
         font-size: 12px;
         font-weight: bold;
     }
+
+    /* --- สไตล์สำหรับ Footer หน้าจัดการ --- */
+    .custom-footer {
+        max-width: 800px;
+        width: 100%;
+        margin: 40px auto 0 auto;
+        background-color: rgba(47, 53, 66, 0.9); /* อิงสี --secondary-color */
+        color: #f1f2f6;
+        text-align: center;
+        padding: 15px 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        font-size: 14px;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-sizing: border-box;
+    }
 </style>
 </head>
 <body>
 
-<!-- ================= วิดีโอพื้นหลัง YouTube (คลิปใหม่) ================= -->
+<!-- ================= วิดีโอพื้นหลัง YouTube (คลิปสอง) ================= -->
 <div class="video-bg-container">
     <iframe 
         src="https://www.youtube.com/embed/fq2WzkeYdLc?autoplay=1&mute=1&loop=1&playlist=fq2WzkeYdLc&controls=0&showinfo=0&modestbranding=1" 
@@ -163,59 +177,55 @@
 <div class="video-overlay"></div>
 <!-- ====================================================================== -->
 
-<div class="header-title">
-    <h1>ระบบจัดการประเภทเมนูอาหาร</h1>
-    <p>รวมประเภทเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
-    
-    <a href="index.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: opacity 0.2s;">
-        ดูหน้าเมนูหลัก
-    </a>
-</div>
+<div class="main-content-wrapper" style="margin-bottom: auto;">
+    <div class="header-title">
+        <h1>ระบบจัดการประเภทเมนูอาหาร</h1>
+        <p>รวมประเภทเมนูทั้งหมดที่มีอยู่ในระบบฐานข้อมูลปัจจุบัน</p>
+        
+        <a href="index.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: opacity 0.2s;">
+            ดูหน้าเมนูหลัก
+        </a>
+    </div>
 
-<?php
-//แสดง error
+    <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
 
-// Report all PHP errors
-error_reporting(E_ALL);
+    include "action/connect.php";
+    $sql = "SELECT * FROM menu_types";
+    $result = mysqli_query($con , $sql);
+    ?>
 
-// Force errors to be displayed on the screen
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-include "action/connect.php";
-
-// ดึง ทัั้งหมด จาก ตาราง menus
-$sql = "SELECT * FROM menu_types";
-// ที่อยู่ฐาน , คิวรี่
-$result = mysqli_query($con , $sql);
-?>
-
-<div class="table-container">
-    <table>
-    <thead>
+    <div class="table-container">
+        <table>
+        <thead>
+            <tr>
+                <th style="width: 30%;">รหัสประเภท</th>
+                <th>ชื่อประเภทเมนู</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach($result as $menu_types){
+        ?>
         <tr>
-            <th style="width: 30%;">รหัสประเภท</th>
-            <th>ชื่อประเภทเมนู</th>
+            <td><span class="badge-id"><?= htmlspecialchars($menu_types["type_id"]) ?></span></td>
+            <td style="font-weight: 600;"><?= htmlspecialchars($menu_types["type_name"]) ?></td>
         </tr>
-    </thead>
-
-    <tbody>
-    <?php
-    foreach($result as $menu_types){
-    ?>
-
-    <tr>
-        <td><span class="badge-id"><?= htmlspecialchars($menu_types["type_id"]) ?></span></td>
-        <td style="font-weight: 600;"><?= htmlspecialchars($menu_types["type_name"]) ?></td>
-    </tr>
-
-    <?php
-    }
-    ?>
-    </tbody>
-
-    </table>
+        <?php
+        }
+        ?>
+        </tbody>
+        </table>
+    </div>
 </div>
+
+<!-- ================= ส่วน Footer หน้าจัดการประเภท (เพิ่มตรงนี้) ================= -->
+<footer class="custom-footer">
+    <p style="margin: 0;">© 2026 ระบบจัดการประเภทสินค้า - หน้าจัดการฐานข้อมูลประเภทเมนูอาหาร</p>
+</footer>
+<!-- ====================================================================== -->
 
 </body>
 </html>
